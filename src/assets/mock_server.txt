@@ -1,0 +1,5 @@
+1. Install:
+npm install -g json-server
+
+2 start:
+json-server --watch src\assets\goodreads_books.json

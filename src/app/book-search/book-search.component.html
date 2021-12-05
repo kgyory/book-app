@@ -1,0 +1,95 @@
+<div class="card">
+    <div class="header">
+      <h2 class="title">Book Search</h2>
+    </div>
+  
+    <div class="content">
+      <form>
+        <div class="form-group">
+          <label>Author:</label>
+          <input [(ngModel)]="author" name="author" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label>Title:</label>
+          <input [(ngModel)]="title" name="to" class="form-control" />
+        </div>
+  
+        <div class="form-group">
+          <button 
+            [disabled]="!author && !title"
+            (click)="search()"
+          class="btn btn-default">Search</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="card">
+    <table class="table table-condensed" *ngIf="books.length > 0">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Author</th>
+          <th>Title</th>
+          <th>ISBN</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let b of books" [class.active]="b === selectedBook">
+          <td>{{ b.id }}</td>
+          <td>{{ b.author }}</td>
+          <td>{{ b.title }}</td>
+          <td>{{ b.isbn }}</td>
+          <td>
+            <a 
+              (click)="select(b)"
+              style="cursor: pointer;">Select
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card" *ngIf="selectedBook">
+    <div class="content">
+        <img src={{selectedBook.cover_link}}>
+    </div>
+  </div>
+  
+  <!--Change Book Data (to keep it simple only to change Title, Author)-->
+
+  <div class="card" *ngIf="selectedBook">
+    <div class="header">
+      <h2 class="title">Book Data Edit</h2>
+    </div>
+    <div class="content">
+  
+      <div>
+        {{ message }}
+      </div>
+
+      <form>
+        <div class="form-group">
+          <label>Author</label>
+          <input [(ngModel)]="selectedBook.author" name="author" class="form-control">
+        </div>
+      
+        <div class="form-group">
+          <label>Title</label>
+          <input [(ngModel)]="selectedBook.title" name="title" class="form-control">
+        </div>
+      
+        
+        <div class="form-group">
+          <button (click)="update()" class="btn btn-default">Save</button>
+          <button (click)="delete()" class="btn btn-warning">Delete</button>
+
+        </div>
+
+        <div *ngIf="isBookDeleted">
+          <h3>Book deleted!</h3>
+        </div>
+
+      </form>
