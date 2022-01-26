@@ -5,16 +5,18 @@ import { HttpClientModule } from '@angular/common/http';
 import { BookServiceModule } from './book-service/book-service.module';
 import { RouterModule } from '@angular/router';
 import { APP_ROUTES } from './app.routes';
+import { UserServiceModule } from './user-service/user-service.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(APP_ROUTES),
     HttpClientModule,
-    BookServiceModule
+    BookServiceModule,
+    UserServiceModule
   ],
   providers: [],
   bootstrap: [AppComponent]
