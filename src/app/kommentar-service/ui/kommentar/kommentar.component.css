@@ -1,0 +1,31 @@
+.timeAgo {
+    font-size: 0.8rem;
+}
+
+.name {
+    font-weight: bold;
+}
+
+button {
+    font-size: 0.7rem;
+}
+
+button.kommentar_edit, button.kommentar_save {
+    width: 65px;
+}
+
+button.kommentar_save {
+    transition: 0.3s ease;
+    transform: translateX(73px);
+    opacity: 0;
+    z-index: -1;
+}
+button.kommentar_save.show {
+    transform: translateX(0px);
+    opacity: 1;
+    z-index: inherit;
+}
+
+textarea.editBox {
+    width: 100%;
+}

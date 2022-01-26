@@ -1,0 +1,24 @@
+<div class="container-fluid">
+    <app-kommentar class="row py-1"
+        *ngIf="allowNew && user && newComment"
+        [kommentar]="newComment"
+        [isNew]="true"
+        (createdEvent)="createdKommentar($event)">
+    </app-kommentar>
+    <div class="col-12" *ngIf="kommentar == undefined">
+        
+    </div>
+
+    <app-kommentar class="row py-1 border-bottom"
+        *ngFor="let k of sortByDesc('erstellt')" 
+        [kommentar]="k"
+        [allowEdit]="user && user?.id?.toString() == k.userId"
+        (deletedEvent)="deleteKommentar($event)"
+        (startEditEvent)="emitStartEditEventToOtherChildren($event)"
+        [otherEditingObs]="otherEditingSubj.asObservable()">
+    </app-kommentar>
+</div>
+
+<div class="container-fluid" *ngIf="kommentar_id == undefined || kommentar == undefined">
+    <div class="col-12" *ngIf="kommentar_id == undefined">No comment available!</div>
+</div>

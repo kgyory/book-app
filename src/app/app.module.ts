@@ -6,6 +6,7 @@ import { BookServiceModule } from './book-service/book-service.module';
 import { RouterModule } from '@angular/router';
 import { APP_ROUTES } from './app.routes';
 import { UserServiceModule } from './user-service/user-service.module';
+import { KommentarServiceModule } from './kommentar-service/kommentar-service.module';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { UserServiceModule } from './user-service/user-service.module';
     RouterModule.forRoot(APP_ROUTES),
     HttpClientModule,
     BookServiceModule,
-    UserServiceModule
+    UserServiceModule,
+    KommentarServiceModule
   ],
   providers: [],
   bootstrap: [AppComponent]
