@@ -18,8 +18,6 @@ export class BookSearchComponent implements OnInit {
   books: Array<Book> = []
   selectedBook: Book | any = null; //had to change from |null to |any because of save()
 
-  isBookDeleted = false;
-
   constructor(private booksService: BooksService) {
 
   }
@@ -66,7 +64,8 @@ export class BookSearchComponent implements OnInit {
     .subscribe({
       next: (response) => {
         console.log(response);
-        this.isBookDeleted = true;
+        this.selectedBook.isBookDeleted = true;
+        this.selectedBook = null;
       },
       error: (error) => {
         console.log(error);

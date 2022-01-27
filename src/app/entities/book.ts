@@ -5,6 +5,7 @@ export interface Book {
     author: string;
     isbn: number;
     isbn13: number;
+    isBookDeleted: boolean;
 }
 
 export const initialBook: Book = {
@@ -14,4 +15,5 @@ export const initialBook: Book = {
     author: '',
     isbn: 0,
     isbn13: 0,
+    isBookDeleted: false,
 };
