@@ -2,84 +2,64 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Book } from '../../entities/book';
+import { Guid } from 'guid-typescript';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BooksService {
 
-  url: string = 'http://localhost:3000/books';
+  url: string = 'https://wf.schertmi.net/v1.0/Book/';
 
   constructor(private http: HttpClient) { 
   }
 
   find(author: string, title: string): Observable<Book[]> {
-  
     const headers = new HttpHeaders()
-    .set('Accept', 'application/json');
+      .set('Accept', 'application/json');
 
-    if (author.length > 0 && title.length >0)
-      {
-      const params = new HttpParams()
-        .set('author', author)
-        .set('title', title);
-      
-      return this.http.get<Book[]>(this.url, {headers, params})
-      }
+    let params = new HttpParams();
+    if (author) params = params.set('author', author);
+    if (title) params = params.set('title', title);
 
-    else if (author.length > 0)
-      {
-        const params = new HttpParams()
-        .set('author', author)
-      
-      return this.http.get<Book[]>(this.url, {headers, params})
-      }
-    
-    else if (title.length > 0)
-      {
-        const params = new HttpParams()
-        .set('title', title);
-      
-      return this.http.get<Book[]>(this.url, {headers, params})
-
-      }
-    
-    return this.http.get<Book[]>(this.url, {headers});  //this will never happen, it is only here because otherwise there is an 
-                                                        //error that function doensn't return anything
-                                                        //there is certainly a nicer way of searching only with title or author
+    return this.http.get<Book[]>(this.url, { headers, params });
    }
 
-  update(id: number, title: string, author: string): Observable<Book> {
-    
+  update(book: Book): Observable<Book> {
     const headers = new HttpHeaders()
       .set('Accept', 'application/json');
 
-    const params = new HttpParams()
-      .set('author', author)
-      .set('title', title)
+    let params = new HttpParams()
+      .set('id', book.id.toString())
+      .set('author', book.author)
+      .set('title', book.title)
+      .set('isbn', book.isbn)
+      .set('coverLink', book.cover_link);
+
+    console.log(params.toString());
   
-      return this.http.put<Book>(`${this.url}/${id}`, {headers, params});
+    return this.http.put<Book>(this.url, null, { headers, params });
   }
 
-  create(id: number, title: string, author: string): Observable<Book> {
-  
+  create(title: string, author: string): Observable<Book> {
     const headers = new HttpHeaders()
       .set('Accept', 'application/json');
   
     const params = new HttpParams()
-      .set('id', id)  
       .set('author', author)
-      .set('title', title)
+      .set('title', title);
   
-      return this.http.post<Book>(this.url, {headers, params});
+    return this.http.post<Book>(this.url, null, { headers, params });
   }
 
-  delete(id: number): Observable<Book> {
-    
+  delete(id: Guid): Observable<Book> {
     const headers = new HttpHeaders()
       .set('Accept', 'application/json');
+  
+      const params = new HttpParams()
+        .set('id', id.toString());
 
-      return this.http.delete<Book>(`${this.url}/${id}`, {headers});
+      return this.http.delete<Book>(this.url, { headers, params });
   }
 }
 

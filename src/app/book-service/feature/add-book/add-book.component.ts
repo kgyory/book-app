@@ -25,7 +25,6 @@ export class AddBookComponent implements OnInit {
   create(): void {
     this.booksService
       .create(
-        this.book.id,
         this.book.title,
         this.book.author)
       .subscribe({

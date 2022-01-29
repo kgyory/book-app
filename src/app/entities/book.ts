@@ -1,5 +1,7 @@
+import { Guid } from 'guid-typescript';
+
 export interface Book {
-    id: number;
+    id: Guid;
     title: string;
     cover_link: string;
     author: string;
@@ -9,7 +11,7 @@ export interface Book {
 }
 
 export const initialBook: Book = {
-    id: 0,
+    id: Guid.create(),
     title: '',
     cover_link: '',
     author: '',

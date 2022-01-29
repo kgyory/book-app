@@ -41,10 +41,7 @@ export class BookSearchComponent implements OnInit {
 
   update(): void {
     this.booksService
-      .update(
-        this.selectedBook.id, 
-        this.selectedBook.title, 
-        this.selectedBook.author)
+      .update(this.selectedBook)
       .subscribe({
         next: book => {
           this.selectedBook = book;
