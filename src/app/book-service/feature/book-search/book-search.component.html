@@ -55,15 +55,15 @@
           </tr>
 
           <!-- Select Row -->
-          <tr *ngIf="b === selectedBook">
+          <tr *ngIf="b === selectedBook" class="bg-light">
             <td colspan="5">
-              <div class="card p-2">
+              <div class="card p-2" >
                 <div class="header">
                   <h2 class="title">Book Data Edit</h2>
                 </div>
 
                 <div class="content">
-                  <img src={{selectedBook.cover_link}}>
+                  <img class="selectedBook_img" src={{selectedBook.cover_link}}>
                 </div>
 
                 <div class="content">
