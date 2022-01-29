@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Book, initialBook } from '../../../entities/book';
 import { BooksService } from '../../data-access/books.service';
 
 
@@ -9,11 +10,7 @@ import { BooksService } from '../../data-access/books.service';
 })
 export class AddBookComponent implements OnInit {
 
-  book = {
-    title: '',
-    author: '',
-    id: 0,
-  } ;
+  book: Book = initialBook;
   
   isBookAdded = false;
 
@@ -44,8 +41,7 @@ export class AddBookComponent implements OnInit {
   newBook(): void {
     this.isBookAdded = false;
     this.book.title = '',
-    this.book.author= '',
-    this.book.id = 0
+    this.book.author= ''
   }
 
 }
