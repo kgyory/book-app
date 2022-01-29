@@ -28,7 +28,7 @@
     <table class="table table-condensed" *ngIf="books.length > 0">
       <thead>
         <tr>
-          <th>Id</th>
+          <th></th>
           <th>Author</th>
           <th>Title</th>
           <th>ISBN</th>
@@ -39,7 +39,9 @@
         <ng-container *ngFor="let b of books">
           <!-- Normal Row -->
           <tr [class.bg-light]="b == selectedBook">
-            <td>{{ b.id }}</td>
+            <td>
+              <a routerLink="/book/{{ b.id.toString() }}" target="_blank">Comments</a>
+            </td>
             <td>{{ b.author }}</td>
             <td>{{ b.title }}</td>
             <td>{{ b.isbn }}</td>
@@ -63,7 +65,7 @@
                 </div>
 
                 <div class="content">
-                  <img class="selectedBook_img" src={{selectedBook.cover_link}}>
+                  <img class="book_size" src={{selectedBook.cover_link}}>
                 </div>
 
                 <div class="content">

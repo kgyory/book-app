@@ -4,11 +4,13 @@ import { BookSearchComponent } from './feature/book-search/book-search.component
 import { AddBookComponent } from './feature/add-book/add-book.component';
 import { SharedModule } from '../shared/shared.module';
 import { BookServiceRoutingModule } from './book-service-routing.module';
+import { BookDetailComponent } from './feature/book-detail/book-detail.component';
 
 @NgModule({
     declarations: [
         BookSearchComponent,
-        AddBookComponent
+        AddBookComponent,
+        BookDetailComponent
     ],
     imports: [
         CommonModule,
@@ -17,7 +19,8 @@ import { BookServiceRoutingModule } from './book-service-routing.module';
     ],
     exports: [
         BookSearchComponent,
-        AddBookComponent
+        AddBookComponent,
+        BookDetailComponent
     ]
 })
 export class BookServiceModule { }

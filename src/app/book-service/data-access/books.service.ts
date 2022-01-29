@@ -9,7 +9,7 @@ import { Guid } from 'guid-typescript';
 })
 export class BooksService {
 
-  url: string = 'https://wf.schertmi.net/v1.0/Book/';
+  url: string = 'https://wf.schertmi.net/v1.0/Book';
 
   constructor(private http: HttpClient) { 
   }
@@ -23,7 +23,14 @@ export class BooksService {
     if (title) params = params.set('title', title);
 
     return this.http.get<Book[]>(this.url, { headers, params });
-   }
+  }
+
+  byId(id: Guid): Observable<Book> {
+    const headers = new HttpHeaders()
+      .set('Accept', 'application/json');
+
+    return this.http.get<Book>(`${this.url}/${id.toString()}`, { headers });
+  }
 
   update(book: Book): Observable<Book> {
     const headers = new HttpHeaders()
@@ -35,8 +42,6 @@ export class BooksService {
       .set('title', book.title)
       .set('isbn', book.isbn)
       .set('coverLink', book.cover_link);
-
-    console.log(params.toString());
   
     return this.http.put<Book>(this.url, null, { headers, params });
   }
@@ -62,19 +67,3 @@ export class BooksService {
       return this.http.delete<Book>(this.url, { headers, params });
   }
 }
-
-
-/* 
-TODO in create:
-- it posts the data but it will not write to the database
-
-TODO in update:
-- Put + id doesen't really work well, in the booklist it creates a mess.
-
-TODO in delete:
-- Reset the form after deleting
-
-TODO in search:
-- Reset form button
-- Make search with one parameter nicer
-*/    
