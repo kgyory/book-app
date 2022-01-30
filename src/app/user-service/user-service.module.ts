@@ -5,12 +5,14 @@ import { UserSearchComponent } from './feature/user-search/user-search.component
 import { AddUserComponent } from './feature/add-user/add-user.component';
 import { UserServiceRoutingModule } from './user-service-routing.module';
 import { UserCardComponent } from './ui/user-card/user-card.component';
+import { EditUserComponent } from './feature/edit-user/edit-user.component';
 
 @NgModule({
     declarations: [
         UserSearchComponent,
         UserCardComponent,
-        AddUserComponent
+        AddUserComponent,
+        EditUserComponent
     ],
     imports: [
         CommonModule,
@@ -19,7 +21,8 @@ import { UserCardComponent } from './ui/user-card/user-card.component';
     ],
     exports: [
         UserSearchComponent,
-        AddUserComponent
+        AddUserComponent,
+        EditUserComponent
     ]
 })
 export class UserServiceModule { }
