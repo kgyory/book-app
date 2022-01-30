@@ -1,33 +1,17 @@
-<div style="width: 500px; margin: auto;">
-  <div class="submit-form">
-    <div *ngIf="!isUseradded">
-      
-      <h3> Welcome to our Book App! Do you want to add or comment to books?
-        Please fill in the registration form & your ready to go!</h3>
-      
-      <div class="form-group">
-          <label>mail</label>
-          <input [(ngModel)]="user.mail" class="form-control" />
-      </div>
-
-      <div class="form-group">
-          <label>username</label>
-          <input [(ngModel)]="user.username" class="form-control" />
-      </div>
-
-      <div class="form-group">
-          <label>password</label>
-          <input [(ngModel)]="user.password" type="password" class="form-control" />
-      </div>
-  
-      <button 
-          (click)="create()" 
-      class="btn btn-success">Create</button>
-    </div>
-
-    <div *ngIf="isUseradded">
-      <h3>Registration was succesfull!</h3>
-      <button class="btn btn-success" (click)="newUser()"> + Add More</button>
-    </div>
+<div class="row mt-2" *ngIf="!created">
+  <div class="d-none d-md-block col-md-2 col-xl-3"></div>
+  <div class="col-12 col-md-8 col-xl-6">
+    <app-user-card 
+      [user]="user"
+      [title]="title"
+      [createBtn]="true"
+      (createdEvent)="create()">
+    </app-user-card>
   </div>
+  <div class="d-none d-md-block  col-md-2 col-xl-3"></div>
+</div>
+
+<div *ngIf="created">
+  <h3>Registration was succesfull!</h3>
+  <button class="btn btn-success" (click)="newUser()"> + Add More</button>
 </div>

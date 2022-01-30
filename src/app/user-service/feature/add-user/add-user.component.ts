@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { User } from '../../../entities/user';
+import { initialUser, User } from '../../../entities/user';
 import { UserService } from '../../data-acces/user.service';
 
 @Component({
@@ -9,43 +9,29 @@ import { UserService } from '../../data-acces/user.service';
 })
 export class AddUserComponent implements OnInit {
 
-  user = {
-    mail: '',
-    username: '',
-    password: ''
-  } ;
-
-  isUseradded = false;
+  user: User = initialUser();
+  created: boolean = false;
+  title: string = "Add User";
 
   constructor(public userService: UserService) { }
 
   ngOnInit(): void { }
 
-    // Add New
   create(): void {
-    this.userService
-      .create(
-        this.user.mail,
-        this.user.username,
-        this.user.password)
+    console.log("Test");
+    this.userService.create(this.user)
       .subscribe({
         next: (response) => {
           console.log(response);
-          this.isUseradded = true;
+          this.created = true;
         },
         error: (error) => {
           console.log(error);
         }
       });
-      }
-  
-  
-  // Reset on adding new
-  
-  newUser(): void {
-    this.isUseradded = false;
-    this.user.mail = '',
-    this.user.password= ''
   }
-
+    
+  newUser(): void {
+    this.user = initialUser();
+  }
 }
