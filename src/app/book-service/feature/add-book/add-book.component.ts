@@ -10,7 +10,7 @@ import { BooksService } from '../../data-access/books.service';
 })
 export class AddBookComponent implements OnInit {
 
-  book: Book = initialBook;
+  book: Book = initialBook();
   
   isBookAdded = false;
 

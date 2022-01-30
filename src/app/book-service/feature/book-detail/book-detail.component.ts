@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Guid } from 'guid-typescript';
-import { Book, initialBook } from 'src/app/entities/book';
+import { Book } from 'src/app/entities/book';
 import { BooksService } from '../../data-access/books.service';
 
 @Component({

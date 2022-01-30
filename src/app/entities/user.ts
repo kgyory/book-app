@@ -6,11 +6,12 @@ export interface User {
   password: string;
   mail: string;
 }
-  
-export const initialUser: User = {
-  id: Guid.create(),
-  username: '',
-  password: '',
-  mail: ''
+
+export function initialUser():User {
+  return { 
+    id: Guid.create(),
+    username: '',
+    password: '',
+    mail: ''
+  };
 };
-  
