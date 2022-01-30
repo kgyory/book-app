@@ -2,24 +2,31 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from '../../entities/user';
-import { TestUserService } from './test-user.service';
+import { DefaultUserService } from './default-user.service';
+import { Guid } from 'guid-typescript';
 
 @Injectable({
   providedIn: 'root',
-  useClass: TestUserService
+  useClass: DefaultUserService
 })
 export abstract class UserService {
 
-  url: string = 'http://localhost:4200//user';
+  url: string = 'https://wf.schertmi.net/v1.0/User';
 
   constructor(private http: HttpClient) { 
   }
 
-  abstract find(mail: string): Observable<User | undefined>;
+  abstract all(): Observable<User[]>;
+  
+  abstract byMail(name: string): Observable<User>;
+  abstract byId(id: Guid): Observable<User>;
 
-  abstract update(mail: string, username: string, password: string): Observable<User | undefined>;
+  abstract find(name: string): Observable<User[]>;
+  
 
-  abstract create(mail: string, username: string, password: string): Observable<User | undefined>;
+  abstract create(user: User): Observable<User>;
 
-  abstract delete(mail: string): Observable<boolean>;
+  abstract update(user: User): Observable<User>;
+
+  abstract delete(id: Guid): Observable<boolean>;
 }

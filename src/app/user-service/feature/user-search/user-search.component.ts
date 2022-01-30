@@ -11,56 +11,26 @@ import { UserService } from '../../data-acces/user.service';
 export class UserSearchComponent implements OnInit {
 
   searchTerm: string = '';
-  user: User | undefined;
-  term: string = '';
+  users: User[] = [];
 
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
+    this.newSearch();
   }
 
   newSearch(): void {
-    this.userService.find(this.searchTerm)
-      .subscribe((data: User | undefined) => {
-        this.user = data;
-      });
+    if (this.searchTerm) {
+      this.userService.find(this.searchTerm)
+        .subscribe((data) => {
+          console.log(data);
+          this.users = data ?? [];
+        });
+    } else {
+      this.userService.all()
+        .subscribe((data) => {
+          this.users = data;
+        });
+    }
   }
-
-  // Change account credits
-  update(): void {
-    if (!this.user) return;
-
-    this.userService
-      .update(
-        this.user.mail,
-        this.user.username,
-        this.user.password)
-      .subscribe({
-        next: (response) => {
-          console.log(response);
-          this.user = response;
-        },
-        error: (error) => {
-          console.log(error);
-        }
-      });
-      }
-
-  // Delete account 
-  delete(): void {
-    if (!this.user) return;
-
-    this.userService
-      .delete(
-        this.user.username)
-      .subscribe({
-        next: (response) => {
-          console.log(response);
-          this.user = undefined;
-        },
-        error: (error) => {
-          console.log(error);
-        }
-      });
-      }
 }

@@ -2,60 +2,67 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from '../../entities/user';
+import { Guid } from 'guid-typescript';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DefaultUserService {
 
-  url: string = 'http://localhost:4200//user';
+  url: string = 'https://wf.schertmi.net/v1.0/User';
+
+  headers: HttpHeaders = new HttpHeaders()
+    .set('Accept', 'application/json');
 
   constructor(private http: HttpClient) { 
   }
 
-  find(mail: string): Observable<User | undefined> {
-  
-    const headers = new HttpHeaders()
-    .set('Accept', 'application/json');
-    const params = new HttpParams()
-    .set('mail', mail);
-    return this.http.get<User>(this.url, {headers, params})
-
-   }
-
-  update(mail: string, username: string, password: string): Observable<User | undefined> {
-    
-    const headers = new HttpHeaders()
-      .set('Accept', 'application/json');
-
-    const params = new HttpParams()
-      .set('mail', mail)
-      .set('username', username)
-      .set('password', password)
-  
-      return this.http.put<User>(`${this.url}/${username}`, {headers, params});
+  all(): Observable<User[]> {
+    return this.http.get<User[]>(this.url, { headers: this.headers });
   }
 
-  create(mail: string, username: string, password: string): Observable<User | undefined> {
-  
-    const headers = new HttpHeaders()
-      .set('Accept', 'application/json');
-  
-    const params = new HttpParams()
-      .set('mail', mail)  
-      .set('username', username)
-      .set('password', password)
-  
-      return this.http.post<User>(this.url, {headers, params});
+  byMail(mail: string): Observable<User> {
+    return this.http.get<User>(`${this.url}/mail/${mail}`, { headers: this.headers });
   }
 
-  delete(mail: string): Observable<boolean> {
-    
-    const headers = new HttpHeaders()
-      .set('Accept', 'application/json');
+  byId(id: Guid): Observable<User> {
+    return this.http.get<User>(`${this.url}/id/${id.toString()}`, { headers: this.headers });
+  }
 
-      this.http.delete<User>(`${this.url}/${mail}`, {headers}).subscribe(t => t);
+  find(name: string): Observable<User[]> {
+    return this.http.get<User[]>(`${this.url}/find/${encodeURIComponent(name)}`, 
+      { headers: this.headers });
+  }
 
-      return new Observable(observer=>observer.next(true));
+  create(user: User): Observable<User> {
+    const params = new HttpParams()
+      .set('id', user.id.toString())
+      .set('username', user.username)  
+      .set('password', user.password)
+      .set('mail', user.mail);
+  
+    return this.http.post<User>(this.url, null, { headers: this.headers, params });
+  }
+
+  update(user: User): Observable<User> {
+    const params = new HttpParams()
+      .set('id', user.id.toString())
+      .set('username', user.username)  
+      .set('password', user.password)
+      .set('mail', user.mail);
+  
+    return this.http.put<User>(this.url, null, { headers: this.headers, params });
+  }
+
+  delete(id: Guid): Observable<boolean> {
+    return new Observable(observer => {
+      const params = new HttpParams()
+        .set('id', id.toString());
+  
+      this.http.delete<User>(this.url, { headers: this.headers, params }).subscribe({
+        next: () => observer.next(true),
+        error: () => observer.next(false)
+      });
+    });
   }
 }

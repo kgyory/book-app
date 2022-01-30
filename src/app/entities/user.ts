@@ -1,18 +1,16 @@
+import { Guid } from 'guid-typescript';
+
 export interface User {
-    id: string; 
-    username: string;
-    password: string;
-    mail: string;
-    //active: boolean;
-    //token: string;
-  }
+  id: Guid; 
+  username: string;
+  password: string;
+  mail: string;
+}
   
-  export const initialUser: User = {
-    id: '',
-    username: '',
-    password: '',
-    mail: '',
-    //active: true
-    //token: ''
-  };
+export const initialUser: User = {
+  id: Guid.create(),
+  username: '',
+  password: '',
+  mail: ''
+};
   
