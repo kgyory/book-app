@@ -1,17 +1,21 @@
+import { Guid } from 'guid-typescript';
+
 export interface Book {
-    id: number;
+    id: Guid;
     title: string;
     cover_link: string;
     author: string;
     isbn: number;
-    isbn13: number;
+    isBookDeleted: boolean;
 }
 
-export const initialBook: Book = {
-    id: 0,
-    title: '',
-    cover_link: '',
-    author: '',
-    isbn: 0,
-    isbn13: 0,
+export function initialBook():Book {
+    return {
+        id: Guid.create(),
+        title: '',
+        cover_link: '',
+        author: '',
+        isbn: 0,
+        isBookDeleted: false
+    };
 };

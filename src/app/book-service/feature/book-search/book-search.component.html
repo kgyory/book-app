@@ -1,0 +1,123 @@
+<div class="card p-2">
+    <div class="header">
+      <h2 class="title">Book Search</h2>
+    </div>
+  
+    <div class="content">
+      <form #searchForm="ngForm">
+        <div class="form-group">
+          <label>Author:</label>
+          <input [(ngModel)]="author" name="author" class="form-control" minlength="3"/>
+        </div>
+        
+        <div
+          class="alert alert-danger"
+          *ngIf="searchForm?.controls?.['author']?.hasError('minlength')">
+          Please enter at least {{ searchForm?.controls?.['author']?.errors?.['minlength']?.requiredLength }} chars
+          (you entered {{ searchForm?.controls?.['author']?.errors?.['minlength']?.actualLength }} only)!
+        </div>
+        
+        <div class="form-group">
+          <label>Title:</label>
+          <input [(ngModel)]="title" name="title" class="form-control" minlength="3"/>
+        </div>
+  
+        <div
+          class="alert alert-danger"
+          *ngIf="searchForm?.controls?.['title']?.hasError('minlength')">
+          Please enter at least {{ searchForm?.controls?.['title']?.errors?.['minlength']?.requiredLength }} chars
+          (you entered {{ searchForm?.controls?.['title']?.errors?.['minlength']?.actualLength }} only)!
+        </div>
+
+        <div class="form-group">
+          <button 
+            [disabled]="!author && !title"
+            (click)="search()"
+          class="btn btn-default">Search</button>
+        </div>
+      </form>
+    </div>
+
+    <table class="table table-condensed mt-3" *ngIf="books.length > 0">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Author</th>
+          <th>Title</th>
+          <th>ISBN</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let b of books">
+          <!-- Normal Row -->
+          <tr [class.bg-light]="b == selectedBook">
+            <td>
+              <a routerLink="/book/{{ b.id.toString() }}" target="_blank">Comments</a>
+            </td>
+            <td>{{ b.author }}</td>
+            <td>{{ b.title }}</td>
+            <td>{{ b.isbn }}</td>
+            <td>
+              <a *ngIf="!b.isBookDeleted"
+                (click)="select(b)"
+                style="cursor: pointer;">{{ (b == selectedBook ? "Selected" : "Select") }}
+              </a>
+              <span *ngIf="b.isBookDeleted">
+                Deleted
+              </span>
+            </td>
+          </tr>
+
+          <!-- Select Row -->
+          <tr *ngIf="b === selectedBook" class="bg-light">
+            <td colspan="5">
+              <div class="card p-2" >
+                <div class="header">
+                  <h2 class="title">Book Data Edit</h2>
+                </div>
+
+                <div class="content">
+                  <img class="book_size" src={{selectedBook.cover_link}}>
+                </div>
+
+                <div class="content">
+              
+                  <div>
+                    {{ message }}
+                  </div>
+              
+                  <form>
+                    <div class="form-group">
+                      <label>Author</label>
+                      <input [(ngModel)]="selectedBook.author" name="author" class="form-control">
+                    </div>
+                  
+                    <div class="form-group">
+                      <label>Title</label>
+                      <input [(ngModel)]="selectedBook.title" name="title" class="form-control">
+                    </div>
+                  
+                    <div class="form-group">
+                      <label>ISBN</label>
+                      <input [(ngModel)]="selectedBook.isbn" name="isbn" class="form-control">
+                    </div>
+                  
+                    <div class="form-group">
+                      <label>Cover Link</label>
+                      <input [(ngModel)]="selectedBook.cover_link" name="link" class="form-control">
+                    </div>
+                  
+                    <div class="form-group">
+                      <button (click)="update()" class="btn btn-success mr-3">Save</button>
+                      <button (click)="delete()" class="btn btn-warning">Delete</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
