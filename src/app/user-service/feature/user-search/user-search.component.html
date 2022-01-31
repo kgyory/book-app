@@ -1,0 +1,40 @@
+<div class="row d-flex align-items-center">
+  <div class="col-12">
+    <h1>Users</h1>
+  </div>  
+
+  <div class="col-12">
+    <input type="text"
+      [(ngModel)]="searchTerm" 
+      class="searchTerm"
+      placeholder="Enter Name to search">
+
+      <button class="btn btn-success ml-3" (click)="newSearch()">Look up!</button>
+  </div>
+</div>
+
+<div class="row mt-3">
+  <div class="col-12">
+    <table class="table table-condensed" *ngIf="users.length > 0">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Id</th>
+          <th>Mail</th>
+          <th>Username</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let u of users">
+          <td>
+            <a routerLink="/user/{{ u.id.toString() }}">Edit</a>
+          </td>
+          <td>{{ u.id }}</td>
+          <td>{{ u.mail }}</td>
+          <td>{{ u.username }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <p *ngIf="users.length == 0">No User found.</p>
+  </div>
+</div>
