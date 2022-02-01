@@ -4,7 +4,7 @@ import { Guid } from 'guid-typescript';
 import { Subject } from 'rxjs';
 import { Book } from 'src/app/entities/book';
 import { KommentarNeuInitial } from 'src/app/entities/kommentar';
-import { initialUser, User } from 'src/app/entities/user';
+import { testUser, User } from 'src/app/entities/user';
 import { KommentarService } from 'src/app/kommentar-service/data-access/kommentar.service';
 import { BooksService } from '../../data-access/books.service';
 
@@ -16,7 +16,7 @@ import { BooksService } from '../../data-access/books.service';
 export class BookDetailComponent implements OnInit {
 
   book: Book | undefined;
-  tmpUser: User = initialUser();
+  tmpUser: User = testUser();
   reloadCommentBlock = new Subject<void>();
 
   constructor(

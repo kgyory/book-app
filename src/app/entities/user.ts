@@ -9,6 +9,15 @@ export interface User {
 
 export function initialUser():User {
   return { 
+    id: Guid.create(),
+    username: '',
+    password: '',
+    mail: ''
+  };
+};
+
+export function testUser():User {
+  return { 
     id: Guid.parse("14a186b0-d5ae-9d91-67b4-4d4eeb7a47cf"),
     username: 'TH',
     password: '123',
