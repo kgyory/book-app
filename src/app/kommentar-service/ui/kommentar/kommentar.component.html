@@ -1,0 +1,39 @@
+<div class="col-12 d-flex justify-content-between">
+    <div>
+        <span class="name">{{kommentar.name}}</span> 
+        <span> · </span>
+        <span class="timeAgo">{{
+            isNew ? "New" : (kommentar.erstellt | dateAgo)
+        }}</span>
+    </div>
+    <div *ngIf="allowEdit || isNew" class="d-flex align-items-center flex-row-reverse">
+        <button 
+            *ngIf="!isNew"
+            type="button" 
+            class="btn btn-outline-danger p-0 px-1 ml-2 kommentar_delete"
+            (click)="delete()">Delete</button>
+
+        <button 
+            *ngIf="!isNew"
+            type="button" 
+            class="btn btn-outline-dark p-0 px-1 ml-2 kommentar_edit"
+            (click)="edit()">{{ isEditing ? "Cancle" : "Edit" }}</button>
+
+        <button 
+            type="button" 
+            class="btn btn-outline-dark p-0 px-1 ml-2 kommentar_save"
+            [class.show]="isEditing || isNew"
+            (click)="save()">{{ isNew ? "Create" : "Save"}}</button>
+    </div>
+</div>
+
+<div class="col-12">
+    <span *ngIf="!isNew && !isEditing" class="pl-1 pl-sm-3">{{kommentar.kommentar}}</span>
+    <textarea 
+        *ngIf="isNew || isEditing" 
+        class="editBox" 
+        [(ngModel)]="kommentar.kommentar"
+        [readonly]="isSaving"
+        rows="2">
+    </textarea>
+</div>

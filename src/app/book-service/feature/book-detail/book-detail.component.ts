@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Guid } from 'guid-typescript';
+import { Subject } from 'rxjs';
 import { Book } from 'src/app/entities/book';
+import { KommentarNeuInitial } from 'src/app/entities/kommentar';
+import { testUser, User } from 'src/app/entities/user';
+import { KommentarService } from 'src/app/kommentar-service/data-access/kommentar.service';
 import { BooksService } from '../../data-access/books.service';
 
 @Component({
@@ -12,8 +16,14 @@ import { BooksService } from '../../data-access/books.service';
 export class BookDetailComponent implements OnInit {
 
   book: Book | undefined;
+  tmpUser: User = testUser();
+  reloadCommentBlock = new Subject<void>();
 
-  constructor(private route: ActivatedRoute, private booksService: BooksService) { 
+  constructor(
+      private route: ActivatedRoute, 
+      private booksService: BooksService,
+      private kommentarService: KommentarService) 
+  { 
     this.route.paramMap.subscribe(
       params => {
         this.booksService.byId(Guid.parse(params.get("id")!))
@@ -33,4 +43,20 @@ export class BookDetailComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  createBookComment() {
+    if (!this.book) return;
+    
+    let comment = KommentarNeuInitial(this.book.id.toString(), this.book.author);
+    comment.id = this.book.id;
+    comment.schreibSchlüssel = this.book.id;
+    comment.title = this.book.title;
+
+    this.kommentarService.new(comment).subscribe({
+      next: (c) => {
+        console.log(c);
+        this.reloadCommentBlock.next(undefined);
+      },
+      error: console.log
+    });
+  }
 }
