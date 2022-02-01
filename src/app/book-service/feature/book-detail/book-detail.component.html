@@ -17,6 +17,13 @@
     </div>
 
     <div class="row mt-3">
-        Comment section goes here!
+        <app-kommentar-block 
+            class="col-12"
+            [kommentar_id]="book.id"
+            [allowNew]="true"
+            [user]="tmpUser"
+            [doReload]="reloadCommentBlock"
+            (noContent)="createBookComment()">
+        </app-kommentar-block>
     </div>
 </ng-container>
